@@ -1,0 +1,14 @@
+<h2>Doors</h2>
+
+<div *ngFor="let door of doors">
+  <a [title]="door.id">
+  <h3>
+     ID: {{ door.Id }}
+  </h3>
+  </a>
+
+  <p *ngIf="door.Door">
+    Name: {{ door.Door }}
+  </p>
+
+</div>
