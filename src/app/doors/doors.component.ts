@@ -34,8 +34,4 @@ export class DoorsComponent implements OnInit {
     this._infiniasService.open(id);
   }
 
-
-
-  
-
 }
