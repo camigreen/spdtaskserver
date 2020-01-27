@@ -1,14 +1,19 @@
 <h2>Doors</h2>
 
-<div *ngFor="let door of doors">
-  <a [title]="door.id">
+<div *ngFor="let gate of gates">
+  <a [title]="gate.Id">
   <h3>
-     ID: {{ door.Id }}
+     ID: {{ gate.Id }}
   </h3>
   </a>
 
-  <p *ngIf="door.Door">
-    Name: {{ door.Door }}
+  <p>
+    Name: {{ gate.Door }}
   </p>
+
+  <p>
+    Status: {{ gate.DoorStatus }}
+  </p>
+  <button (click)="open(gate.Id)">Open</button>
 
 </div>

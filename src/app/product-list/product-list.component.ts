@@ -13,7 +13,6 @@ export class ProductListComponent implements OnInit {
   constructor(private _infiniasService: InfiniasService ) {}
 
   ngOnInit() {
-    this.doors = this._infiniasService.getDoors();
   }
 }
 

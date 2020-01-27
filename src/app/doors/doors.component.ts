@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { InfiniasService } from '../infinias.service';
-import { Door } from "../infinias.door";
+import { Door, Gates, DoorStatus } from "../infinias.datatypes";
+import { interval } from "rxjs"
 
 @Component({
   selector: 'app-doors',
@@ -9,16 +10,32 @@ import { Door } from "../infinias.door";
 })
 export class DoorsComponent implements OnInit {
 
-  public doors:Door[] = [];
+  public gates:DoorStatus[];
 
   constructor(private _infiniasService: InfiniasService) { }
 
   ngOnInit() {
-    this._infiniasService.getDoors()
-      .subscribe(data => {
-        this.doors = data.Values;
-      });
-     // console.log(this.doors);
+    const secondsCounter = interval(10000);
+    secondsCounter.subscribe(n => {
+      this.heartbeat();
+    })  
+    
   }
+
+  heartbeat () {
+    this._infiniasService.getDoors()
+      .subscribe(gates => {
+      this.gates = gates;
+    });
+  }
+
+  open(id) {
+    console.log(id);
+    this._infiniasService.open(id);
+  }
+
+
+
+  
 
 }
