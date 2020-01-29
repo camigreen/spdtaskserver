@@ -21,7 +21,6 @@ export class InfiniasService {
           .subscribe(data => {
               self.doors = data['Values'];
               for(let door in data['Values']) {
-                console.log(door);
               }
           })
           obs.next(self.doors);
