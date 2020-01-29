@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { InfiniasService } from '../infinias.service';
 import { Door, Gates, DoorStatus } from "../infinias.datatypes";
-import { interval } from "rxjs"
 
 @Component({
   selector: 'app-doors',
@@ -10,28 +9,43 @@ import { interval } from "rxjs"
 })
 export class DoorsComponent implements OnInit {
 
-  public gates:DoorStatus[];
+  public doors = [];
+  public statusMap = {
+    ClosedNormal: {
+      light: 'led-green',
+      text: 'Closed'
+    },
+    OpenNormal: {
+      light: 'led-red',
+      text: 'Open'
+    },
+    unknown: {
+      light: 'led-none',
+      text: 'Unknown Status'
+    }
+  }
 
   constructor(private _infiniasService: InfiniasService) { }
 
   ngOnInit() {
-    const secondsCounter = interval(10000);
-    secondsCounter.subscribe(n => {
-      this.heartbeat();
-    })  
-    
-  }
-
-  heartbeat () {
-    this._infiniasService.getDoors()
-      .subscribe(gates => {
-      this.gates = gates;
-    });
+    var self = this;
+    this._infiniasService.heartbeat()
+      .subscribe((doors: DoorStatus[]) => {
+        console.log(doors);
+      }); 
+      console.log(this.doors);
   }
 
   open(id) {
-    console.log(id);
-    this._infiniasService.open(id);
+    console.log('Opening '+id+' from component.');
+    this._infiniasService.open(id).subscribe();
   }
+
+  close(id) {
+    console.log('Closing '+id+' from component.');
+    this._infiniasService.close(id).subscribe();
+  }
+
+
 
 }

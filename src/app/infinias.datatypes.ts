@@ -1,6 +1,11 @@
-export interface Result {
+export interface DoorResult {
     success: boolean,
     data: Door
+}
+
+export interface DoorResults {
+    NextRealizeUrl: string,
+    Values: DoorStatus[]
 }
 
 export interface Gates {
@@ -79,6 +84,7 @@ export interface DoorStatus {
     DoorStatus: string,
     BatteryStatus: number,
     InCameraId: number,
+    OutCameraId: number,
     InZoneId: number,
     OutZoneId: number
 }
