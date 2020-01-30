@@ -2,6 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DoorResults, DoorResult, DoorStatus, Door } from "./infinias.datatypes";
 import { Observable, of } from 'rxjs';
+import { doorlist } from './doorlist';
 
 @Injectable( )
 export class InfiniasService {
@@ -10,6 +11,7 @@ export class InfiniasService {
     intervalDuration: 1000
   };
   public doors:DoorStatus[] = [];
+  public doorlist = new doorlist().list;
 
   constructor(private http: HttpClient) { }
 
@@ -18,10 +20,8 @@ export class InfiniasService {
     return Observable.create(function (obs) {
       setInterval(function() {
         self.getDoors()
-          .subscribe(data => {
-              self.doors = data['Values'];
-              for(let door in data['Values']) {
-              }
+          .subscribe((data: DoorResults) => {
+            self.doors = data['Values'];
           })
           obs.next(self.doors);
       }, self.settings.intervalDuration)
@@ -30,6 +30,10 @@ export class InfiniasService {
   }
 
   getDoors() {
+    // var self = this;
+    // return Observable.create(function (obs) {
+    //   obs.next(self.doorlist);
+    // })
     return this.http.get('http://localhost:3000/api/doors/');
   } 
 

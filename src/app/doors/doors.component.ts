@@ -19,6 +19,14 @@ export class DoorsComponent implements OnInit {
       light: 'led-red',
       text: 'Open'
     },
+    ForcedOpen: {
+      light: 'led-yellow',
+      text: 'Forced Open'
+    },
+    HeldOpen: {
+      light: 'led-blue',
+      text: 'Held Open'
+    },
     unknown: {
       light: 'led-none',
       text: 'Unknown Status'
@@ -28,12 +36,33 @@ export class DoorsComponent implements OnInit {
   constructor(private _infiniasService: InfiniasService) { }
 
   ngOnInit() {
-    var self = this;
+    var temp: DoorStatus[];
     this._infiniasService.heartbeat()
-      .subscribe((doors: DoorStatus[]) => {
-        console.log(doors);
+      .subscribe((data: DoorStatus[]) => {
+        this.renderData(data);
       }); 
-      console.log(this.doors);
+  }
+
+  renderData(data) {
+    var i = 0;
+    var result = [];
+    var group = [];
+    data.forEach((door: DoorStatus) => {
+      if(door.Id == 2 || door.Id == 4 || door.Id == 17 || door.Id == 66) {
+        if(i < 4) {
+          group.push(door);
+          i++;
+        } else {
+          result.push(group);
+          group = [];
+          group.push(door);
+          i = 1;
+        }
+      }
+    });
+    console.log(group);
+    result.push(group);
+    this.doors = result;
   }
 
   open(id) {
