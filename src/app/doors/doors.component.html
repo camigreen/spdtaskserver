@@ -1,8 +1,12 @@
 <h2>Doors</h2>
 <div class="door-container">
+  <video width="320" height="240" controls>
+    <source src="http://10.10.10.198:8080" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 <div *ngFor="let rows of doors" class="row">
   <div *ngFor="let door of rows" class="col-sm-3">
-    <div class="card">
+    <div class="card"> 
       <img src="assets/img/no_video.png" style="height:300px;"/>
       <div class="card-body">
         <div  class="row">
@@ -20,11 +24,16 @@
           </div>
         </div>
         <div class="row">
-          <button (click)="open(door.Id)" class="btn btn-primary" type="button">Open</button>&nbsp;
-          <button (click)="close(door.Id)" class="btn btn-danger" type="button">Close</button>
+          <button (click)="open(door.Id)" class="btn btn-danger btn-block mx-auto" type="button">Open</button>
+          <button (click)="close(door.Id)" class="btn btn-success btn-block mx-auto" type="button">Close</button>
         </div>
       </div>
     </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col" style="border:1px solid black">
+
   </div>
 </div>
 </div>
