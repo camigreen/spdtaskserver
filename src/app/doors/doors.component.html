@@ -1,13 +1,18 @@
 <h2>Doors</h2>
 <div class="door-container">
-  <video width="320" height="240" controls>
-    <source src="http://10.10.10.198:8080" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+  <div class="row">
+    <div class="col-lg-1">
+      <button (click)="emergencyOpen()" class="btn btn-danger mx-auto" type="button">Emergency Open</button>&nbsp;
+      
+    </div>
+    <div class="col-lg-1">
+      <button (click)="emergencyClose()" class="btn btn-dark mx-auto" type="button">Return To Schedule</button>
+    </div>
+  </div>
 <div *ngFor="let rows of doors" class="row">
-  <div *ngFor="let door of rows" class="col-sm-3">
+  <div *ngFor="let door of rows" class="col-lg-3">
     <div class="card"> 
-      <img src="assets/img/no_video.png" style="height:300px;"/>
+      <img *ngIf="false" src="assets/img/no_video.png" style="height:300px;"/>
       <div class="card-body">
         <div  class="row">
           <h4 class="card-title">{{door.Door}}</h4>
@@ -20,7 +25,7 @@
             </div>
           </div>
           <div class="col">
-            {{statusMap[door.DoorStatus].text}}
+            {{statusMap[door.DoorStatus].text}} {{door.LockStatus}}
           </div>
         </div>
         <div class="row">
@@ -29,11 +34,6 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col" style="border:1px solid black">
-
   </div>
 </div>
 </div>

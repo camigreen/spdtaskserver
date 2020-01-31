@@ -41,14 +41,23 @@ export class InfiniasService {
     return this.http.get<(DoorResult)>('http://localhost:3000/api/doors/'+id);
   }
 
-  open(id) {
-    console.log('Opening '+id+' from service.');
-    return this.http.get<{}>('http://localhost:3000/api/doors/'+id+'/open');
+  open(ids) {
+    console.log('Opening '+ids+' from service.');
+    return this.http.get<{}>('http://localhost:3000/api/doors/'+ids+'/open');
   }
 
-  close(id) {
-    console.log('Closing '+id+' from service.');
-    return this.http.get<{}>('http://localhost:3000/api/doors/'+id+'/close');
+  close(ids) {
+    console.log('Closing '+ids+' from service.');
+    return this.http.get<{}>('http://localhost:3000/api/doors/'+ids+'/close');
   }
+
+  unlock(ids) {
+    console.log('Unlocking '+ids+' from service.');
+    return this.http.get<{}>('http://localhost:3000/api/doors/'+ids+'/unlock');
+  }
+
+
+
+
 
 }

@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { InfiniasService } from '../infinias.service';
 import { Door, Gates, DoorStatus } from "../infinias.datatypes";
+
+
 
 @Component({
   selector: 'app-doors',
   templateUrl: './doors.component.html',
   styleUrls: ['./doors.component.css']
 })
+
 export class DoorsComponent implements OnInit {
 
   public doors = [];
@@ -60,7 +63,6 @@ export class DoorsComponent implements OnInit {
         }
       }
     });
-    console.log(group);
     result.push(group);
     this.doors = result;
   }
@@ -75,6 +77,12 @@ export class DoorsComponent implements OnInit {
     this._infiniasService.close(id).subscribe();
   }
 
-
+  emergencyOpen() {
+    var ids = '16,77'
+    console.log('Unlocking '+ids+' from component.');
+    this._infiniasService.unlock(ids).subscribe();
+  }
 
 }
+
+
