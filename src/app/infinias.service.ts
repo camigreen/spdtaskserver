@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DoorResults, DoorResult, DoorStatus, Door } from "./infinias.datatypes";
+import { DoorResults, DoorResult, DoorStatus, Door, reqOptions } from "./infinias.datatypes";
 import { Observable, of } from 'rxjs';
 import { doorlist } from './doorlist';
 
@@ -8,7 +8,10 @@ import { doorlist } from './doorlist';
 export class InfiniasService {
 
   private settings = {
-    intervalDuration: 1000
+    intervalDuration: 1000,
+    server: "http://192.168.0.70",
+    //server: "http://localhost",
+    port: "3000"
   };
   public doors:DoorStatus[] = [];
   public doorlist = new doorlist().list;
@@ -34,26 +37,21 @@ export class InfiniasService {
     // return Observable.create(function (obs) {
     //   obs.next(self.doorlist);
     // })
-    return this.http.get('http://localhost:3000/api/doors/');
+    return this.http.get(this.settings.server+':'+this.settings.port+'/api/doors/');
   } 
 
   getDoor(id):Observable<DoorResult> {
-    return this.http.get<(DoorResult)>('http://localhost:3000/api/doors/'+id);
+    return this.http.get<(DoorResult)>(this.settings.server+':'+this.settings.port+'/api/doors/'+id);
   }
 
-  open(ids) {
-    console.log('Opening '+ids+' from service.');
-    return this.http.get<{}>('http://localhost:3000/api/doors/'+ids+'/open');
+  unlock(options: reqOptions) {
+    console.log(options);
+    return this.http.put<{}>(this.settings.server+':'+this.settings.port+'/api/doors/unlock', options);
   }
 
-  close(ids) {
-    console.log('Closing '+ids+' from service.');
-    return this.http.get<{}>('http://localhost:3000/api/doors/'+ids+'/close');
-  }
-
-  unlock(ids) {
-    console.log('Unlocking '+ids+' from service.');
-    return this.http.get<{}>('http://localhost:3000/api/doors/'+ids+'/unlock');
+  lock(options: reqOptions) {
+    console.log(options);
+    return this.http.put<{}>(this.settings.server+':'+this.settings.port+'/api/doors/lock', options);
   }
 
 

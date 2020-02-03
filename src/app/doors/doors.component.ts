@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { InfiniasService } from '../infinias.service';
-import { Door, Gates, DoorStatus } from "../infinias.datatypes";
+import { Door, Gates, DoorStatus, reqOptions } from "../infinias.datatypes";
 
 
 
@@ -13,6 +13,7 @@ import { Door, Gates, DoorStatus } from "../infinias.datatypes";
 export class DoorsComponent implements OnInit {
 
   public doors = [];
+  public logText = [];
   public statusMap = {
     ClosedNormal: {
       light: 'led-green',
@@ -67,20 +68,49 @@ export class DoorsComponent implements OnInit {
     this.doors = result;
   }
 
-  open(id) {
-    console.log('Opening '+id+' from component.');
-    this._infiniasService.open(id).subscribe();
+  unlockMomentary(ids: string) {
+    var options:reqOptions = {
+      doorIDs: ids,
+      duration: 10
+    };
+
+    this.log('Door(s) '+ids+' momentarily unlocked.');
+    this._infiniasService.unlock(options).subscribe();
   }
 
-  close(id) {
-    console.log('Closing '+id+' from component.');
-    this._infiniasService.close(id).subscribe();
+  lockNormal(ids: string) {
+    var options:reqOptions = {
+      doorIDs: ids,
+      lockStatus: 'Normal'
+    };
+
+    this.log('Door(s) '+ids+' locked normally.');
+    this._infiniasService.lock(options).subscribe();
   }
 
-  emergencyOpen() {
-    var ids = '16,77'
-    console.log('Unlocking '+ids+' from component.');
-    this._infiniasService.unlock(ids).subscribe();
+  emergencyUnlock() {
+    var options:reqOptions = {
+      doorIDs: '17,66',
+      duration: 0
+    };
+
+    this.log('Door(s) '+options.doorIDs+' emergency opened!');
+    this._infiniasService.unlock(options).subscribe();
+  }
+
+  emergencyLock() {
+    var options:reqOptions = {
+      doorIDs: '17,66',
+      lockStatus: 'Locked'
+    };
+
+    this.log('Door(s) '+options.doorIDs+' emergency locked!');
+    this._infiniasService.unlock(options).subscribe();
+  }
+
+  log(data: string) {
+    this.logText.push(data);
+    console.log(data);
   }
 
 }

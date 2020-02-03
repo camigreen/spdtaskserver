@@ -88,3 +88,10 @@ export interface DoorStatus {
     InZoneId: number,
     OutZoneId: number
 }
+
+export interface reqOptions {
+    doorIDs: string,
+    lockStatus?: string, 
+    duration?: number
+    
+}
