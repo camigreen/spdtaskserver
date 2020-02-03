@@ -1,18 +1,18 @@
 <h2>Doors</h2>
 <div class="door-container">
   <div class="row">
-    <div class="col-lg-1">
+    <div class="col-lg-1 col-gap">
       <button (click)="emergencyUnlock()" class="btn btn-danger mx-auto" type="button">Emergency Open</button>&nbsp;
     </div>
-    <div class="col-lg-1">
+    <div class="col-lg-1 col-gap">
       <button (click)="emergencyLock()" class="btn btn-success mx-auto" type="button">Emergency Close</button>
     </div>
-    <div class="col-lg-1">
+    <div class="col-lg-1 col-gap">
       <button (click)="lockNormal('17,66')" class="btn btn-dark mx-auto" type="button">Return To Schedule</button>
     </div>
   </div>
 <div *ngFor="let rows of doors" class="row">
-  <div *ngFor="let door of rows" class="col-lg-3">
+  <div *ngFor="let door of rows" class="col-lg-3 col-gap">
     <div class="card"> 
       <img *ngIf="false" src="assets/img/no_video.png" style="height:300px;"/>
       <div class="card-body">
@@ -27,7 +27,7 @@
             </div>
           </div>
           <div class="col">
-            {{statusMap[door.DoorStatus].text}} {{door.LockStatus}}
+            {{statusMap[door.DoorStatus].text}}
           </div>
         </div>
         <div class="row">

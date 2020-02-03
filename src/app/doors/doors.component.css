@@ -1,6 +1,9 @@
 .row + .row {
   margin-top: 20px;
 }
+.col-gap {
+  margin-top: 20px;
+}
 .led-container {
     background-size: cover;
   background: rgb(226,226,226); /* Old browsers */
