@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { InfiniasService } from './infinias.service';
 import { DoorsComponent } from './doors/doors.component';
 import { HttpClientModule } from "@angular/common/http";
-import { VideoComponent } from './video/video.component';
 
 
 
@@ -16,8 +15,7 @@ import { VideoComponent } from './video/video.component';
   ],
   declarations: [
     AppComponent,
-    DoorsComponent,
-    VideoComponent
+    DoorsComponent
   ],
   providers: [ InfiniasService ],
   bootstrap: [ AppComponent ]
