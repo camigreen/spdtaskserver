@@ -6,6 +6,8 @@ import { InfiniasService } from './infinias.service';
 import { DoorsComponent } from './doors/doors.component';
 import { HttpClientModule } from "@angular/common/http";
 
+import 'bootstrap';
+
 
 
 @NgModule({

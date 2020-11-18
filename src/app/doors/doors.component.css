@@ -1,9 +1,6 @@
 .row + .row {
   margin-top: 20px;
 }
-.col-gap {
-  margin-top: 20px;
-}
 .led-container {
     background-size: cover;
   background: rgb(226,226,226); /* Old browsers */
@@ -133,5 +130,9 @@
     height: 24px;
     background-color: rgb(255, 255, 255);
     border-radius: 50%;
-    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89FF00 0 2px 12px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 1px 1px, inset #9b9b9b 0 -1px 1px;
+  }
+
+  .door-container {
+    margin: 20px;
   }

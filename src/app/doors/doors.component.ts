@@ -13,7 +13,10 @@ import { Door, Gates, DoorStatus, reqOptions } from "../infinias.datatypes";
 export class DoorsComponent implements OnInit {
 
   public doors = [];
+  protected _doors = {};
   public logText = [];
+  private selectedDoors = [2,4];
+  private selectedGates = [17,66,72,74];
   public statusMap = {
     ClosedNormal: {
       light: 'led-green',
@@ -27,9 +30,17 @@ export class DoorsComponent implements OnInit {
       light: 'led-yellow',
       text: 'Forced Open'
     },
+    VehicleExiting: {
+      light: 'led-yellow',
+      text: 'Vehicle(s) Exiting'
+    },
     HeldOpen: {
       light: 'led-blue',
       text: 'Held Open'
+    },
+    Offline: {
+      light: 'led-none',
+      text: 'Offline'
     },
     unknown: {
       light: 'led-none',
@@ -52,8 +63,17 @@ export class DoorsComponent implements OnInit {
     var result = [];
     var group = [];
     data.forEach((door: DoorStatus) => {
-      if(door.Id == 2 || door.Id == 4 || door.Id == 17 || door.Id == 66) {
+      if(this.selectedDoors.includes(door.Id) || this.selectedGates.includes(door.Id)) {
+        if(door.ControllerStatus == "Offline") {
+          door.DoorStatus = "Offline";
+        }
+        if (this.selectedGates.includes(door.Id)) {
+          if(door.DoorStatus == "ForcedOpen") {
+            door.DoorStatus = "VehicleExiting";
+          }
+        }
         if(i < 4) {
+          
           group.push(door);
           i++;
         } else {
@@ -62,6 +82,7 @@ export class DoorsComponent implements OnInit {
           group.push(door);
           i = 1;
         }
+        this._doors[door.Id] = door;
       }
     });
     result.push(group);
@@ -73,9 +94,31 @@ export class DoorsComponent implements OnInit {
       doorIDs: ids,
       duration: 10
     };
+    console.log(this._doors[ids]);
+    var door = this._doors[ids];
+    if (door.ControllerStatus == "Offline") {
+      this.log('"'+this._doors[ids].Door+'" is Offline.');
+    } else {
+      this.log('"'+this._doors[ids].Door+'" temporarily unlocked.');
+      this._infiniasService.unlock(options).subscribe();
+    }
+    
+  }
 
-    this.log('Door(s) '+ids+' momentarily unlocked.');
-    this._infiniasService.unlock(options).subscribe();
+  lockOpen(ids: string) {
+    var options:reqOptions = {
+      doorIDs: ids,
+      duration: 0
+    };
+    console.log(this._doors[ids]);
+    var door = this._doors[ids];
+    if (door.ControllerStatus == "Offline") {
+      this.log('"'+this._doors[ids].Door+'" is Offline.');
+    } else {
+      this.log('"'+this._doors[ids].Door+'" is locked OPEN.');
+      this._infiniasService.unlock(options).subscribe();
+    }
+    
   }
 
   lockNormal(ids: string) {
@@ -84,13 +127,13 @@ export class DoorsComponent implements OnInit {
       lockStatus: 'Normal'
     };
 
-    this.log('Door(s) '+ids+' locked normally.');
+    this.log('"'+this._doors[ids].Door+'" has been returned to the schedule.');
     this._infiniasService.lock(options).subscribe();
   }
 
   emergencyUnlock() {
     var options:reqOptions = {
-      doorIDs: '17,66',
+      doorIDs: '17,66,72,74',
       duration: 0
     };
 
@@ -100,7 +143,7 @@ export class DoorsComponent implements OnInit {
 
   emergencyLock() {
     var options:reqOptions = {
-      doorIDs: '17,66',
+      doorIDs: '17,66,72,74',
       lockStatus: 'Locked'
     };
 
