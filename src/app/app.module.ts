@@ -1,32 +1,19 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
-import { InfiniasService } from './infinias.service';
-import { DoorsComponent } from './doors/doors.component';
-import { HttpClientModule } from "@angular/common/http";
-
-import 'bootstrap';
-
+import { DoorsModule } from './doors/doors.module';
 
 
 @NgModule({
   imports: [
-    BrowserModule,
-    HttpClientModule
+    DoorsModule
   ],
   declarations: [
-    AppComponent,
-    DoorsComponent
+    AppComponent
   ],
-  providers: [ InfiniasService ],
+  providers: [ ],
   bootstrap: [ AppComponent ]
 })
-export class AppModule {
-
- 
-
-}
+export class AppModule {}
 
 
 /*

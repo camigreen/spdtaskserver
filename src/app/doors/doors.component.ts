@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { InfiniasService } from '../infinias.service';
-import { Door, Gates, DoorStatus, reqOptions } from "../infinias.datatypes";
-
-
+// import { InfiniasService } from '../infinias.service';
+import { AlertService } from '../alert/alert.service';
+import { DoorStatus, reqOptions } from "../infinias.datatypes";
 
 @Component({
   selector: 'app-doors',
@@ -48,7 +47,7 @@ export class DoorsComponent implements OnInit {
     }
   }
 
-  constructor(private _infiniasService: InfiniasService) { }
+  constructor(private _infiniasService: InfiniasService, private _alert: AlertService ) { }
 
   ngOnInit() {
     var temp: DoorStatus[];
@@ -152,6 +151,7 @@ export class DoorsComponent implements OnInit {
   }
 
   log(data: string) {
+    this._alert.show(data, { classname: 'bg-success text-light', delay: 100000 });
     this.logText.push(data);
     console.log(data);
   }
