@@ -8,7 +8,7 @@
       <button (click)="emergencyLock()" class="btn btn-success mx-auto" type="button">Emergency Close</button>
     </div>
     <div class="col-lg-1 col-gap">
-      <button (click)="lockNormal('17,66')" class="btn btn-dark mx-auto" type="button">Return To Schedule</button>
+      <button (click)="returnToSchedule('17,66')" class="btn btn-dark mx-auto" type="button">Return To Schedule</button>
     </div>
   </div>
 <div *ngFor="let rows of doors" class="row">
@@ -43,7 +43,10 @@
         </div>
         <div class="row">
           <div class="col-sm">
-            <button (click)="lockNormal(door.Id)" class="btn btn-success btn-block mx-auto" type="button">Close</button>
+            <button (click)="lock(door.Id)" class="btn btn-success btn-block mx-auto" type="button">Close</button>
+          </div>
+          <div class="col-sm">
+            <button (click)="returnToSchedule(door.Id)" class="btn btn-dark btn-block mx-auto" type="button">Return To Schedule</button>
           </div>
         </div>
       </div>
@@ -55,5 +58,5 @@
   <p>{{text}}</p>
 </div>
 </div>
-<app-alert></app-alert>
+
 

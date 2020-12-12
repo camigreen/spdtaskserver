@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-// import { InfiniasService } from '../infinias.service';
+import { InfiniasService } from '../infinias.service';
 import { AlertService } from '../alert/alert.service';
 import { DoorStatus, reqOptions } from "../infinias.datatypes";
 
@@ -91,7 +91,7 @@ export class DoorsComponent implements OnInit {
   unlockMomentary(ids: string) {
     var options:reqOptions = {
       doorIDs: ids,
-      duration: 10
+      duration: 30
     };
     console.log(this._doors[ids]);
     var door = this._doors[ids];
@@ -120,13 +120,13 @@ export class DoorsComponent implements OnInit {
     
   }
 
-  lockNormal(ids: string) {
+  lock(ids: string) {
     var options:reqOptions = {
       doorIDs: ids,
-      lockStatus: 'Normal'
+      lockStatus: 'Locked'
     };
 
-    this.log('"'+this._doors[ids].Door+'" has been returned to the schedule.');
+    this.log('"'+this._doors[ids].Door+'" has been locked.');
     this._infiniasService.lock(options).subscribe();
   }
 
@@ -138,6 +138,16 @@ export class DoorsComponent implements OnInit {
 
     this.log('Door(s) '+options.doorIDs+' emergency opened!');
     this._infiniasService.unlock(options).subscribe();
+  }
+
+  returnToSchedule(ids: string) {
+    var options:reqOptions = {
+      doorIDs: ids,
+      lockStatus: 'Normal'
+    };
+
+    this.log('"'+this._doors[ids].Door+'" has been returned to the schedule.');
+    this._infiniasService.lock(options).subscribe();
   }
 
   emergencyLock() {
